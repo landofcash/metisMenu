@@ -235,7 +235,7 @@ const MetisMenu = (($) => {
         return;
       }
 
-      _el
+      (_el.css('transition').startsWith('none')) ? complete() : _el
         .height(_el[0].scrollHeight)
         .one(Util.TRANSITION_END, complete);
 
@@ -288,7 +288,7 @@ const MetisMenu = (($) => {
         return;
       }
 
-      (_el.height() == 0 || _el.css('display') == 'none') ? complete() : _el
+      (_el.height() == 0 || _el.css('display') == 'none' || _el.css('transition').startsWith('none')) ? complete() : _el
         .height(0)
         .one(Util.TRANSITION_END, complete);
 
