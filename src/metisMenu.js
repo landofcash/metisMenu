@@ -182,7 +182,7 @@ const MetisMenu = (($) => {
 
     }
 
-    _show(element) {
+    _show(element, noTransition) {
       if (this._transitioning ||
         $(element).hasClass(this._config.collapsingClass)) {
         return;
@@ -234,16 +234,15 @@ const MetisMenu = (($) => {
         complete();
         return;
       }
-
-      (_el.css('transition').startsWith('none')) ? complete() : _el
-        .height(_el[0].scrollHeight)
-        .one(Util.TRANSITION_END, complete);
-
+      if(_el.css('transition').startsWith('none') || noTransition){
+        complete();
+      }else{
+        _el.height(_el[0].scrollHeight).one(Util.TRANSITION_END, complete);
+      }
       transitionEndEmulator(TRANSITION_DURATION);
-
     }
 
-    _hide(element) {
+    _hide(element, noTransition) {
 
       if (this._transitioning || !$(element).hasClass(this._config.collapseInClass)) {
         return;
@@ -287,11 +286,11 @@ const MetisMenu = (($) => {
         complete();
         return;
       }
-
-      (_el.height() == 0 || _el.css('display') == 'none' || _el.css('transition').startsWith('none')) ? complete() : _el
-        .height(0)
-        .one(Util.TRANSITION_END, complete);
-
+      if(_el.height() == 0 || _el.css('display') == 'none' || _el.css('transition').startsWith('none') || noTransition){
+        complete();
+      }else{
+        _el.height(0).one(Util.TRANSITION_END, complete);
+      }
       transitionEndEmulator(TRANSITION_DURATION);
     }
 
